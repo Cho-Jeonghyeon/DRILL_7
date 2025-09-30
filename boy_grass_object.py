@@ -47,11 +47,15 @@ class Zombie:
                              self.x, self.y, frame_width//5.9, frame_height//5.9)
 
 
-class ball:
+class Ball:
     def __init__(self):
         self.x, self.y = random.randint(0, 800), 599
-        self.image = load_image('ball21x21.png')
-        self.speed = random.randint(5, 20)
+        size = random.choice(['small', 'big'])
+        if size == 'small':
+          self.image = load_image('ball21x21.png')
+        elif size == 'big':
+            self.image = load_image('ball41x41.png')
+        self.speed = random.randint(3, 13)
 
     def draw(self):
         self.image.draw(self.x, self.y)
@@ -82,6 +86,9 @@ def reset_world():
 
     team = [Boy() for i in range(11)] + [Zombie() for i in range(4)]
     world+=team
+
+    ball = [Ball() for i in range(20)]
+    world+=ball
 
 
 def update_world():
