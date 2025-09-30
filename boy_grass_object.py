@@ -17,7 +17,7 @@ class Grass:
 
 class Boy:
     def __init__(self):
-        self.x = random.randint(100,700)
+        self.x = random.randint(0,700)
         self.y = 90
         self.image = load_image('run_animation.png')
         self.frame = random.randint(0,7)
@@ -31,8 +31,9 @@ class Boy:
 
 class Zombie:
     def __init__(self):
-        self.x, self.y = 100,170
-        self.frame = 0
+        self.x = random.randint(0, 700)
+        self.y = 90
+        self.frame = random.randint(0,7)
         self.image = load_image('zombie_run_animation.png')
 
     def update(self):
@@ -43,7 +44,7 @@ class Zombie:
         frame_width = self.image.w //10
         frame_height = self.image.h
         self.image.clip_draw(self.frame * frame_width, 0, frame_width, frame_height,
-                             self.x, self.y, frame_width//2, frame_height//2)
+                             self.x, self.y, frame_width//5.9, frame_height//5.9)
 
 
 def handle_events():
@@ -57,26 +58,28 @@ def handle_events():
 
 def reset_world():
     global running
-    global grass
-    global team
+    global world
+
     running = True
+    world = []
+
     grass = Grass()
-    team = [Boy() for i in range(10)]
+    world.append(grass)
+
+    team = [Boy() for i in range(11)] + [Zombie() for i in range(4)]
+    world+=team
 
 
 def update_world():
-    grass.update()
-    for boy in team:
-       boy.update()
 
+    for o in world:
+        o.update()
 
 def render_world():
     clear_canvas()
-    grass.draw()
-    for boy in team:
-        boy.draw()
+    for o in world:
+        o.draw()
     update_canvas()
-    pass
 
 
 open_canvas()
