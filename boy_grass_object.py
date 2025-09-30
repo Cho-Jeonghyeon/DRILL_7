@@ -47,6 +47,20 @@ class Zombie:
                              self.x, self.y, frame_width//5.9, frame_height//5.9)
 
 
+class ball:
+    def __init__(self):
+        self.x, self.y = random.randint(0, 800), 599
+        self.image = load_image('ball21x21.png')
+        self.speed = random.randint(5, 20)
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+
+    def update(self):
+        self.y -= self.speed
+
+
+
 def handle_events():
     global running
     events = get_events()
